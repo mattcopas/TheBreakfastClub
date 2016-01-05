@@ -1,0 +1,65 @@
+Vagrant.configure(2) do |config|
+
+	# Notes about the code:
+		# hostname sets the fqdn, not the hostname...
+		# The GUI for the development environment is
+		# downloaded in a bash script
+		# Boxes are stored in C:/Users/USERNAME/.vagrant.d/boxes
+	
+	# General stuff
+	config.vm.box = "geerlingguy/centos6"
+	config.vm.provider :virtualbox do |vb|
+		vb.memory = 1024
+		vb.cpus = 2
+		vb.gui = false
+	end
+	
+	config.vm.define "master" do |master|
+		master.vm.box = "ubuntu/trusty64"
+		master.vm.network "public_network", ip: "192.168.1.200"
+		master.vm.hostname = "master.breakfastclub.com"
+		master.vm.provider :virtualbox do |vbmaster|
+			vbmaster.name = "Breakfast Club Master"
+			vbmaster.memory = 4096
+		end
+		master.vm.provision :shell, path: "ubuntuBasicBash.sh"
+		master.vm.provision :shell, path: "enterpriseInstall.sh"
+	end
+	
+	# config.vm.define "mysql_agent" do |mysql_agent|
+		# mysql_agent.vm.network "public_network", ip: "192.168.1.201"
+		# mysql_agent.vm.hostname = "mysql.breakfastclub.com"
+		# mysql_agent.vm.provider :virtualbox do |vbmysql|
+			# vbmysql.name = "MySQL"
+		# end
+	# end
+	
+	# config.vm.define "travis_ant_agent" do |travis_ant_agent|
+		# travis_ant_agent.vm.network "public_network", ip: "192.168.1.202"
+		# travis_ant_agent.vm.hostname = "travisAnt.breakfastclub.com"
+			# travis_ant_agent.vm.provider :virtualbox do |vbta|
+				# vbta.name = "Travis Ant"
+			# end
+	# end
+	
+	# config.vm.define "artifactory_agent" do |artifactory_agent|
+		# artifactory_agent.vm.network "public_network", ip: "192.168.1.203"
+		# artifactory_agent.vm.hostname = "artifactory.breakfastclub.com"
+		# artifactory_agent.vm.provider :virtualbox do |vbartifactory|
+			# vbartifactory.name = "Artifactory"
+		# end
+	# end
+	
+	# config.vm.define "development_agent1" do |development_agent1|
+		# development_agent1.vm.box = "chad-thompson/ubuntu-trusty64-gui"
+		# development_agent1.vm.network "public_network", ip: "192.168.1.204"
+		# development_agent1.vm.hostname = "dev1.breakfastclub.com"
+		# development_agent1.vm.provider :virtualbox do |vbdev1|
+			# vbdev1.name = "Development 1"
+			# vbdev1.gui = "true"
+		# end
+		# development_agent1.vm.provision :shell, path: "ubuntuBasicBash.sh"
+		# development_agent1.vm.provision :shell, path: "ubuntuInstallGUI.sh"
+	# end
+
+end
