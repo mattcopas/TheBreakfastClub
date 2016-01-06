@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-apt-get update -y
-apt-get install -y facter curl vim
+sudo apt-get update
+sudo apt-get install -y facter curl vim
